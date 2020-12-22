@@ -1,46 +1,74 @@
-import React, {useState} from 'react';
-import { Link, Redirect } from "react-router-dom";
+import React, { useState } from 'react';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { connect } from 'react-redux'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 
-function Navigation() {
+function Navigation(props) {
 
-    return (
-        <nav style={{backgroundColor: "#182C61"}}>
-            <ul style={{listStyle: 'none', display: 'flex', justifyContent: 'space-around'}}>
-                <li>
-                    <Link style={{color: "#FFFFFF"}} to="/">Home</Link>
-                </li>
-                <li>
-                    <Link style={{color: "#FFFFFF"}} to="/chat">Messagerie instantanée</Link>
-                </li>
-                <li>
-                    <Link style={{color: "#FFFFFF"}} to="/infos">Informations pratiques</Link>
-                </li>
-                <li>
-                    <Link style={{color: "#FFFFFF"}} to="/maplive">Suivi en direct</Link>
-                </li>
-                <li>
-                    <Link style={{color: "#FFFFFF"}} to="/media">Médias</Link>
-                </li>
-                <li>
-                    <Link style={{color: "#FFFFFF"}} to="/myaccount">Mon compte</Link>
-                </li>
-                <li>
-                    <Link style={{color: "#FFFFFF"}} to="/news">Actualités du rallye</Link>
-                </li>
-                <li>
-                    <Link style={{color: "#FFFFFF"}} to="/program">Programme</Link>
-                </li>
-                <li>
-                    <Link style={{color: "#FFFFFF"}} to="/ranking">Classement des équipes</Link>
-                </li>
-                <li>
-                    <Link style={{color: "#FFFFFF"}} to="/teams">Liste des équipes</Link>
-                </li>
-            </ul>
-        </nav>
-    );
+  const [collapsed, setCollapsed] = useState(true);
+
+  const toggleNavbar = () => setCollapsed(!collapsed);
+
+  return (
+    <div >
+      <Navbar style={{ backgroundColor: "red" }} color="faded" light>
+        <NavbarToggler onClick={toggleNavbar} className="mr-2" />
+        <NavbarBrand href="/" className="mr-auto">
+          {props.screen}
+          <FontAwesomeIcon icon={faUser} onClick={()=>{console.log('OK')}}/>
+        </NavbarBrand>
+        <Collapse isOpen={!collapsed} navbar>
+          <Nav navbar>
+            <NavItem>
+              <NavLink href="/">Accueil</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/news">Actualités du rallye</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/program">Programme</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/teams">Liste des équipes</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/maplive">Suivi en direct</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/ranking">Classement et résultats</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/media">Médias officiels</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/infos">Informations pratiques</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/chat">Messagerie instantanée</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/myaccount">Mon compte</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/">Se déconnecter</NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Navbar>
+    </div>
+  );
 }
 
+function mapStateToProps(state) {
+  return {
+    screen: state.screenName
+  }
+}
 
-export default Navigation;
+export default connect(
+  mapStateToProps,
+  null
+)(Navigation);
