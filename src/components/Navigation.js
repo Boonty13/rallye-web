@@ -5,20 +5,29 @@ import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 
+import SignInUp from '../components/SignInUp'
+import { Button } from 'react-bootstrap'
+
 
 function Navigation(props) {
 
   const [collapsed, setCollapsed] = useState(true);
+  const [modalShow, setModalShow] = useState(false);
 
   const toggleNavbar = () => setCollapsed(!collapsed);
 
   return (
     <div >
+
+      {/* MODAL CALL */}
+      <SignInUp show={modalShow} onHide={() => setModalShow(false)} />
+
+      {/* NAVIGATION */}
       <Navbar style={{ backgroundColor: "red" }} color="faded" light>
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
-        <NavbarBrand href="/" className="mr-auto">
+        <NavbarBrand className="mr-auto">
           {props.screen}
-          <FontAwesomeIcon icon={faUser} onClick={()=>{console.log('OK')}}/>
+          <Button onClick={() => { setModalShow(true) }}><FontAwesomeIcon icon={faUser} /> Se connecter / S'inscrire</Button>
         </NavbarBrand>
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
