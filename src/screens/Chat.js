@@ -1,10 +1,23 @@
-import React, {useState, useRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {connect} from 'react-redux'
 import {Alert, Button, Modal} from 'react-bootstrap'
 
 
 function Chat(props) {
   props.changeScreen('Messagerie instantanée')
+
+  useEffect(()=>{
+
+        // Function to retrieve chat history
+        async function getHistoryChat(roomName) {
+          const rawAnswer = await fetch(`${serverUrl}/chat/get-chat?room=${roomName}`, {
+              method: 'GET',
+          });
+          let chatInfo = (await rawAnswer.json()).roomInfo;
+          console.log('CHAT : ', chatInfo)
+      }
+      getHistoryChat('Officiel')
+  })
 
 
   return (
