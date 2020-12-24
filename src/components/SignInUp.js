@@ -8,8 +8,8 @@ import { Input } from 'reactstrap';
 import {connect} from 'react-redux'
 
 
-// const serverUrl = 'https://serene-coast-48705.herokuapp.com'
-const serverUrl = 'http://192.168.1.86:3000'
+const serverUrl = 'https://serene-coast-48705.herokuapp.com'
+// const serverUrl = 'http://192.168.1.86:3000'
 
 function SignInUp(props) {
 
