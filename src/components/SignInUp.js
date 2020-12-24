@@ -6,10 +6,8 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { Input } from 'reactstrap';
 
 import {connect} from 'react-redux'
+import {serverUrl} from '../tools/globalVariables'
 
-
-const serverUrl = 'https://serene-coast-48705.herokuapp.com'
-// const serverUrl = 'http://192.168.1.86:3000'
 
 function SignInUp(props) {
 
@@ -22,7 +20,6 @@ function SignInUp(props) {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const [visible, setVisible] = useState(false);
   const [errors, setErrors] = useState([]);
 
 
@@ -51,11 +48,8 @@ function SignInUp(props) {
     if (answer.recorded === true) {
       props.record(answer.data);
       // storeData(answer.data.token, answer.data.status);
-
-      // props.navigation.navigate('Home');
     } else {
       setErrors(answer.error);
-      // toggleOverlay();
     }
   }
 
@@ -83,11 +77,8 @@ function SignInUp(props) {
     if (answer.result === true) {
       props.record(answer.data);
       // storeData(answer.data.token, answer.data.status);
-      // props.navigation.navigate('Home');
     } else {
       setErrors(answer.error);
-      // toggleOverlay();
-
     }
   }
 

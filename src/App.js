@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 
 import screenName from './reducers/screenName.reducer'
 import userInfos from './reducers/userInfos.reducer'
+import userFavorites from './reducers/userFavorites.reducer'
 
 import Navigation from './components/Navigation'
 import Chat from './screens/Chat'
@@ -19,14 +20,14 @@ import Ranking from './screens/Ranking'
 import Teams from './screens/Teams'
 import Welcome from './screens/Welcome'
 
-const store = createStore(combineReducers({ screenName, userInfos }))
+const store = createStore(combineReducers({ screenName, userInfos, userFavorites }))
 
 function App() {
   return (
 
     <Provider store={store}>
       <Router>
-        <div style={{ display: 'flex', flexDirection: "column", height: '100vh' }}>
+        <div style={{ display: 'flex', flexDirection: "column", height: '100vh'}}>
 
           <Navigation />
           <Switch>
