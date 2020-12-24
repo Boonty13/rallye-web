@@ -1,10 +1,11 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux'
+import { Provider } from 'react-redux'
 
-import screenName from './reducers/screenName.reducer';
+import screenName from './reducers/screenName.reducer'
+import userInfos from './reducers/userInfos.reducer'
 
 import Navigation from './components/Navigation'
 import Chat from './screens/Chat'
@@ -18,7 +19,7 @@ import Ranking from './screens/Ranking'
 import Teams from './screens/Teams'
 import Welcome from './screens/Welcome'
 
-const store = createStore(combineReducers({ screenName }));
+const store = createStore(combineReducers({ screenName, userInfos }))
 
 function App() {
   return (

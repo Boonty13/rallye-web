@@ -1,7 +1,8 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux'
-import {Alert, Button, Modal} from 'react-bootstrap'
 
+// const serverUrl = 'https://serene-coast-48705.herokuapp.com'
+const serverUrl = 'http://192.168.1.86:3000'
 
 function Chat(props) {
   props.changeScreen('Messagerie instantanée')
@@ -13,11 +14,11 @@ function Chat(props) {
           const rawAnswer = await fetch(`${serverUrl}/chat/get-chat?room=${roomName}`, {
               method: 'GET',
           });
-          let chatInfo = (await rawAnswer.json()).roomInfo;
+          let chatInfo = (await rawAnswer.json());
           console.log('CHAT : ', chatInfo)
       }
       getHistoryChat('Officiel')
-  })
+  }, [])
 
 
   return (
