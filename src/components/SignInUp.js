@@ -1,13 +1,11 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { Input } from 'reactstrap';
 
-import {connect} from 'react-redux'
-import {serverUrl} from '../tools/globalVariables'
-
+import { connect } from 'react-redux'
+import { serverUrl } from '../tools/globalVariables'
+import { storeData } from '../tools/functions'
 
 function SignInUp(props) {
 
@@ -57,7 +55,7 @@ function SignInUp(props) {
   async function processSignIn() {
 
     const dataUser = {
-      email:emailSignIn,
+      email: emailSignIn,
       password: passwordSignIn
     }
 
@@ -75,8 +73,18 @@ function SignInUp(props) {
 
     ///// Recording in reduce store and local storage if answer is ok //////
     if (answer.result === true) {
+
       props.record(answer.data);
+      const favorite = answer.data.favorites.map(fav => {
+        const returnOb = {};
+        returnOb._id = fav._id;
+        returnOb.car_id = fav.car_id;
+        return returnOb;
+      })
+      props.retrieveFavoriteTeam(favorite);
+      props.log()
       // storeData(answer.data.token, answer.data.status);
+  
     } else {
       setErrors(answer.error);
     }
@@ -88,9 +96,9 @@ function SignInUp(props) {
       <Modal.Footer style={{ flexDirection: 'column', textAlign: 'center' }}>
         <h4>Se connecter</h4>
 
-        <Input id='email' placeholder='Email' type='text' onChange={(e)=>{setEmailSignIn(e.target.value)}} />
-        <Input id='password' placeholder='Mot de passe' type='password' onChange={(e)=>{setPasswordSignIn(e.target.value)}} />
-        <Button style={{ margin: 10 }} onClick={()=>{processSignIn() ; props.onHide()}} type="submit" >Valider</Button>
+        <Input id='email' placeholder='Email' type='text' onChange={(e) => { setEmailSignIn(e.target.value) }} />
+        <Input id='password' placeholder='Mot de passe' type='password' onChange={(e) => { setPasswordSignIn(e.target.value) }} />
+        <Button style={{ margin: 10 }} onClick={() => { processSignIn(); props.onHide() }} type="submit" >Valider</Button>
       </Modal.Footer>
 
       <Modal.Footer style={{ flexDirection: 'column' }}>
@@ -103,11 +111,11 @@ function SignInUp(props) {
           </p>
         </div>
 
-        <Input id='firstName' placeholder='Prénom' type='text' onChange={(e)=>{setFirstName(e.target.value)}} />
-        <Input id='lastName' placeholder='Nom' type='text' onChange={(e)=>{setLastName(e.target.value)}} />
-        <Input id='email' placeholder='Email' type='text' onChange={(e)=>{setEmail(e.target.value)}} />
-        <Input id='password' placeholder='Mot de passe' type='password' onChange={(e)=>{setPassword(e.target.value)}} />
-        <Button style={{ margin: 10 }} onClick={()=>{processSignUp() ; props.onHide()}} type='submit'>Valider</Button>
+        <Input id='firstName' placeholder='Prénom' type='text' onChange={(e) => { setFirstName(e.target.value) }} />
+        <Input id='lastName' placeholder='Nom' type='text' onChange={(e) => { setLastName(e.target.value) }} />
+        <Input id='email' placeholder='Email' type='text' onChange={(e) => { setEmail(e.target.value) }} />
+        <Input id='password' placeholder='Mot de passe' type='password' onChange={(e) => { setPassword(e.target.value) }} />
+        <Button style={{ margin: 10 }} onClick={() => { processSignUp(); props.onHide() }} type='submit'>Valider</Button>
       </Modal.Footer>
 
     </Modal>
@@ -117,13 +125,16 @@ function SignInUp(props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    record: function(user) { 
-      dispatch( {type: 'record', user }) 
+    record: function (user) {
+      dispatch({ type: 'record', user })
+    },
+    retrieveFavoriteTeam: function (listFavorites) {
+      dispatch({ type: 'retrieveFavoriteTeam', listFavorites })
     }
   }
 }
 
 export default connect(
-    null, 
-    mapDispatchToProps
+  null,
+  mapDispatchToProps
 )(SignInUp);

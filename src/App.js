@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 import { createStore, combineReducers } from 'redux'
@@ -20,9 +20,36 @@ import Ranking from './screens/Ranking'
 import Teams from './screens/Teams'
 import Welcome from './screens/Welcome'
 
+import {serverUrl} from './tools/globalVariables'
+
 const store = createStore(combineReducers({ screenName, userInfos, userFavorites }))
 
 function App() {
+  const [userStatus, setUserStatus] = useState('unknown')
+
+  useEffect(() => {
+    // AsyncStorage.clear()
+    const getData = async () => {
+
+      //// Getting data in local storage if existing ////
+      try {
+        const value = localStorage.getItem('token')
+        if (value !== null) {
+          const rawAnswer = await fetch(`${serverUrl}/user/get-user?token=${value}`, {
+            method: 'GET',
+          });
+          const answer = await rawAnswer.json();
+
+          setUserStatus(answer.user.status)
+        }
+
+      } catch (e) {
+        console.log('ERROR', e);
+      }
+    }
+    getData();
+  }, [userStatus])
+
   return (
 
     <Provider store={store}>

@@ -3,17 +3,28 @@ import { connect } from 'react-redux'
 import CardTeam from '../components/CardTeam'
 import { Container, Row, Button } from 'reactstrap';
 
-import { serverUrl } from '../tools/globalVariables'
+import { serverUrl, redDark, redLight, greyDark, greyLight } from '../tools/globalVariables'
 
 function Teams(props) {
   props.changeScreen('Liste des équipes')
 
+  const styleActiveBtn = {
+    width:120, 
+    backgroundColor: redLight,
+    borderColor: redDark
+  }
+
+  const styleInactiveBtn = {
+    width:120, 
+    backgroundColor: greyLight,
+    borderColor: greyDark
+  }
+
   const [allTeams, setAllTeams] = useState([])
   const [teamToDisplay, setTeamToDisplay] = useState([])
-  const [displayButton, setDisplayButton] = useState('Tous')
-  const [colorBtnAll, setColorBtnAll] = useState('red')
-  const [colorBtnReg, setColorBtnReg] = useState('gray')
-  const [colorBtnComp, setColorBtnComp] = useState('gray')
+  const [styleBtnAll, setStyleBtnAll] = useState(styleActiveBtn)
+  const [styleBtnReg, setStyleBtnReg] = useState(styleInactiveBtn)
+  const [styleBtnComp, setStyleBtnComp] = useState(styleInactiveBtn)
 
   useEffect(() => {
     async function getTeams() {
@@ -33,32 +44,28 @@ function Teams(props) {
   const noFilter = () => {
     const filteredTeams = allTeams;
     setTeamToDisplay(filteredTeams);
-    setDisplayButton('Tous');
 
-    setColorBtnAll('red');
-    setColorBtnComp('gray')
-    setColorBtnReg('gray')
+    setStyleBtnAll(styleActiveBtn);
+    setStyleBtnComp(styleInactiveBtn)
+    setStyleBtnReg(styleInactiveBtn)
   }
 
   const filterRegularity = () => {
-    console.log(allTeams)
     const filteredTeams = allTeams.filter(team => categoryRegularity.includes(team.category));
     setTeamToDisplay(filteredTeams);
-    setDisplayButton('Reg');
 
-    setColorBtnAll('gray');
-    setColorBtnComp('gray')
-    setColorBtnReg('red')
+    setStyleBtnAll(styleInactiveBtn);
+    setStyleBtnComp(styleInactiveBtn)
+    setStyleBtnReg(styleActiveBtn)
   }
 
   const filterCompetition = () => {
     const filteredTeams = allTeams.filter(team => !categoryRegularity.includes(team.category));
     setTeamToDisplay(filteredTeams);
-    setDisplayButton('Comp');
 
-    setColorBtnAll('gray');
-    setColorBtnComp('red')
-    setColorBtnReg('gray')
+    setStyleBtnAll(styleInactiveBtn);
+    setStyleBtnComp(styleActiveBtn)
+    setStyleBtnReg(styleInactiveBtn)
   }
 
 
@@ -77,11 +84,11 @@ function Teams(props) {
       paddingTop: '3%',
       height: '100vh'
     }}>
-      <div style={{ marginBottom: '3%', justifyContent: 'center' }}>
+      <div style={{ marginBottom: '3%', display: 'flex', justifyContent: 'center' }}>
 
-        <Button onClick={() => noFilter()} style={{ backgroundColor: colorBtnAll }}>Tous</Button>
-        <Button onClick={() => filterRegularity()} style={{ backgroundColor: colorBtnReg }}>Régularité</Button>
-        <Button onClick={() => filterCompetition()} style={{ backgroundColor: colorBtnComp }}>Compétition</Button>
+        <Button onClick={() => noFilter()} style={styleBtnAll}>Tous</Button>
+        <Button onClick={() => filterRegularity()} style={styleBtnReg} >Régularité</Button>
+        <Button onClick={() => filterCompetition()} style={styleBtnComp}>Compétition</Button>
 
       </div>
       <Row>
@@ -100,7 +107,14 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    userFavorites: state.userFavorites,
+    userInfos: state.userInfos
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Teams);

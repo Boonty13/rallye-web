@@ -1,19 +1,23 @@
 export default function (userFavorites = [], action) {
 
   if (action.type === 'addFavoriteTeam') {
-      let newFavorites = [...userFavorites];
-      newFavorites.push(action.numTeam);
-      return newFavorites
+    let newFavorites = [...userFavorites];
+    newFavorites.push(action.numTeam);
+    return newFavorites
 
   } else if (action.type === 'removeFavoriteTeam') {
 
-      const filteredFav = userFavorites.filter(fav => fav._id !== action.numTeam);
+    const filteredFav = userFavorites.filter(fav => fav._id !== action.numTeam);
 
-      return filteredFav
+    return filteredFav
 
   } else if (action.type === 'retrieveFavoriteTeam') {
-      return action.listFavorites
+    return action.listFavorites
+
+  } else if (action.type === "reset") {
+    return []
+    
   } else {
-      return userFavorites
+    return userFavorites
   }
 }
