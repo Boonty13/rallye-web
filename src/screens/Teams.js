@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import CardTeam from '../components/CardTeam'
 import { Container, Row, Button } from 'reactstrap';
 
-import { serverUrl, redDark, redLight, greyDark, greyLight } from '../tools/globalVariables'
+import { serverUrl, red, redDark, redLight, greyDark, greyLight } from '../tools/globalVariables'
 
 function Teams(props) {
   props.changeScreen('Liste des équipes')
 
   const styleActiveBtn = {
     width:120, 
-    backgroundColor: redLight,
+    backgroundColor: red,
     borderColor: redDark
   }
 
@@ -77,7 +77,6 @@ function Teams(props) {
 
   return (
     <Container fluid style={{
-      backgroundColor: "#fd9644",
       margin: 0,
       paddingLeft: '10%',
       paddingRight: '10%',

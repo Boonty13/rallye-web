@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import { Container, Row, Button, Col, ListGroup, ListGroupItem, Badge } from 'reactstrap';
 import { Image } from 'react-bootstrap'
 
-import { serverUrl, redDark, redLight, greyBlack, greyDark, greyLight, colorLight, colorDark } from '../tools/globalVariables'
+import { serverUrl,red,  redDark, redLight, greyBlack, greyDark, greyLight, colorLight, colorDark } from '../tools/globalVariables'
 import { fullNamePilot, namePilot, flagNationality } from '../tools/functions'
 function Ranking(props) {
   props.changeScreen('Classement et résultats')
 
   const styleActiveBtn = {
     width: 120,
-    backgroundColor: redLight,
+    backgroundColor: red,
     borderColor: redDark
   }
 
@@ -64,7 +64,7 @@ function Ranking(props) {
   let teamRankingBig = teamToDisplay.map((team, i) => {
     return (
       <Col md='12' className="d-none d-md-block" >
-        <ListGroupItem style={{ display: 'flex', alignItems: 'center' }}>
+        <ListGroupItem style={{ display: 'flex', alignItems: 'center', backgroundColor:redLight }}>
 
           {team.position === 1 ?
             <Badge style={{ marginRight: '3%', width: '7%', backgroundColor: 'gold' }}>{team.position}</Badge>
@@ -84,7 +84,7 @@ function Ranking(props) {
 
           <div style={{ display: 'flex', flexDirection: 'column', width: '20%' }}>
             <div>{team.time}</div>
-            {team.diff !== '' ? <div><small style={{ color: greyLight }}>+{team.diff}</small></div> : <div></div>}
+            {team.diff !== '' ? <div><small style={{ color: redDark }}>+{team.diff}</small></div> : <div></div>}
           </div>
         </ListGroupItem>
       </Col>
@@ -94,7 +94,7 @@ function Ranking(props) {
   let teamRankingSmall = teamToDisplay.map((team, i) => {
     return (
       <Col xs='12' className="d-block d-md-none" >
-        <ListGroupItem style={{ display: 'flex', alignItems: 'center' }}>
+        <ListGroupItem style={{ display: 'flex', alignItems: 'center', backgroundColor: redLight }}>
 
         {team.position === 1 ?
             <Badge style={{ marginRight: '3%', width: '7%', backgroundColor: 'gold' }}>{team.position}</Badge>
@@ -113,7 +113,7 @@ function Ranking(props) {
 
           <div style={{ display: 'flex', flexDirection: 'column', width: '20%' }}>
             <div>{team.time}</div>
-            {team.diff !== '' ? <div><small style={{ color: greyLight }}>+{team.diff}</small></div> : <div></div>}
+            {team.diff !== '' ? <div><small style={{ color: redDark }}>+{team.diff}</small></div> : <div></div>}
           </div>
         </ListGroupItem>
       </Col>
@@ -123,7 +123,6 @@ function Ranking(props) {
   return (
 
     <Container fluid style={{
-      backgroundColor: "#fd9644",
       margin: 0,
       paddingLeft: '10%',
       paddingRight: '10%',

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 
-import { Input } from 'reactstrap';
+import { Input, Button } from 'reactstrap';
 
 import { connect } from 'react-redux'
-import { serverUrl } from '../tools/globalVariables'
+import { colorLight, serverUrl, redDark } from '../tools/globalVariables'
 import { storeData } from '../tools/functions'
 
 function SignInUp(props) {
@@ -84,7 +84,7 @@ function SignInUp(props) {
       props.retrieveFavoriteTeam(favorite);
       props.log()
       // storeData(answer.data.token, answer.data.status);
-  
+
     } else {
       setErrors(answer.error);
     }
@@ -98,7 +98,7 @@ function SignInUp(props) {
 
         <Input id='email' placeholder='Email' type='text' onChange={(e) => { setEmailSignIn(e.target.value) }} />
         <Input id='password' placeholder='Mot de passe' type='password' onChange={(e) => { setPasswordSignIn(e.target.value) }} />
-        <Button style={{ margin: 10 }} onClick={() => { processSignIn(); props.onHide() }} type="submit" >Valider</Button>
+        <Button style={{ margin: 10, backgroundColor: redDark, color: colorLight, border: 'none' }} onClick={() => { processSignIn(); props.onHide() }} type="submit" >Valider</Button>
       </Modal.Footer>
 
       <Modal.Footer style={{ flexDirection: 'column' }}>
@@ -115,7 +115,7 @@ function SignInUp(props) {
         <Input id='lastName' placeholder='Nom' type='text' onChange={(e) => { setLastName(e.target.value) }} />
         <Input id='email' placeholder='Email' type='text' onChange={(e) => { setEmail(e.target.value) }} />
         <Input id='password' placeholder='Mot de passe' type='password' onChange={(e) => { setPassword(e.target.value) }} />
-        <Button style={{ margin: 10 }} onClick={() => { processSignUp(); props.onHide() }} type='submit'>Valider</Button>
+        <Button style={{ margin: 10, backgroundColor: redDark, color: colorLight, border: 'none' }} onClick={() => { processSignUp(); props.onHide() }} type='submit'>Valider</Button>
       </Modal.Footer>
 
     </Modal>

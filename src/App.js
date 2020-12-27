@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import screenName from './reducers/screenName.reducer'
 import userInfos from './reducers/userInfos.reducer'
 import userFavorites from './reducers/userFavorites.reducer'
+import chatHistory from './reducers/chatHistory.reducer'
 
 import Navigation from './components/Navigation'
 import Chat from './screens/Chat'
@@ -22,7 +23,7 @@ import Welcome from './screens/Welcome'
 
 import {serverUrl} from './tools/globalVariables'
 
-const store = createStore(combineReducers({ screenName, userInfos, userFavorites }))
+const store = createStore(combineReducers({ screenName, userInfos, userFavorites, chatHistory }))
 
 function App() {
   const [userStatus, setUserStatus] = useState('unknown')

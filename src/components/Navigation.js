@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } from 'reactstrap';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 import SignInUp from '../components/SignInUp'
-import { Button } from 'react-bootstrap'
 import { redDark, redLight, colorDark, colorLight, greyBlack, greyDark, greyLight } from '../tools/globalVariables'
 
 
@@ -17,14 +16,14 @@ function Navigation(props) {
   const [modalShow, setModalShow] = useState(false);
   const [logged, setLogged] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log('LOG : ', logged)
-    if (props.userInfos.length > 0 ){
+    if (props.userInfos.length > 0) {
       setLogged(true)
     }
   }, [logged])
 
-  const toggleLogged = ()=> setLogged(!logged)
+  const toggleLogged = () => setLogged(!logged)
 
   const toggleNavbar = () => setCollapsed(!collapsed)
 
@@ -43,45 +42,47 @@ function Navigation(props) {
           {props.screen}
 
           {logged ?
-            <Button onClick={() => {props.reset() ; setLogged(!logged)}}><FontAwesomeIcon icon={faUser} /> Se déconnecter</Button>
-            : <Button onClick={() => { setModalShow(true) }}><FontAwesomeIcon icon={faUser} /> Se connecter / S'inscrire</Button>
+            <Button style={{ backgroundColor: redLight, color: redDark, border: 'none' }} onClick={() => { props.reset(); setLogged(!logged) }}><FontAwesomeIcon icon={faUser} /> Se déconnecter</Button>
+            : <Button style={{ backgroundColor: redLight, color: redDark, border: 'none' }} onClick={() => { setModalShow(true) }}><FontAwesomeIcon icon={faUser} /> Se connecter / S'inscrire</Button>
           }
         </NavbarBrand>
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
             <NavItem>
-              <Link to="/" onClick={toggleNavbar} style={{color:colorLight}} >Accueil</Link>
+              <Link to="/" onClick={toggleNavbar} style={{ color: colorLight }} >Accueil</Link>
             </NavItem>
             <NavItem>
-              <Link to="/news" onClick={toggleNavbar} style={{color:colorLight}} >Actualités du rallye</Link>
+              <Link to="/news" onClick={toggleNavbar} style={{ color: colorLight }} >Actualités du rallye</Link>
             </NavItem>
             <NavItem>
-              <Link to="/program" onClick={toggleNavbar} style={{color:colorLight}} >Programme</Link>
+              <Link to="/program" onClick={toggleNavbar} style={{ color: colorLight }} >Programme</Link>
             </NavItem>
             <NavItem>
-              <Link to="/teams" onClick={toggleNavbar} style={{color:colorLight}} >Liste des équipes</Link>
+              <Link to="/teams" onClick={toggleNavbar} style={{ color: colorLight }} >Liste des équipes</Link>
             </NavItem>
             <NavItem>
-              <Link to="/maplive" onClick={toggleNavbar} style={{color:colorLight}} >Suivi en direct</Link>
+              <Link to="/maplive" onClick={toggleNavbar} style={{ color: colorLight }} >Suivi en direct</Link>
             </NavItem>
             <NavItem>
-              <Link to="/ranking" onClick={toggleNavbar} style={{color:colorLight}} >Classement et résultats</Link>
+              <Link to="/ranking" onClick={toggleNavbar} style={{ color: colorLight }} >Classement et résultats</Link>
             </NavItem>
             <NavItem>
-              <Link to="/media" onClick={toggleNavbar} style={{color:colorLight}} >Médias officiels</Link>
+              <Link to="/media" onClick={toggleNavbar} style={{ color: colorLight }} >Médias officiels</Link>
             </NavItem>
-            <NavItem>
-              <Link to="/infos" onClick={toggleNavbar} style={{color:colorLight}} >Informations pratiques</Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/chat" onClick={toggleNavbar} style={{color:colorLight}} >Messagerie instantanée</Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/myaccount" onClick={toggleNavbar} style={{color:colorLight}} >Mon compte</Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/" onClick={toggleNavbar} style={{color:colorLight}} >Se déconnecter</Link>
-            </NavItem>
+
+            {/* PILOTS AND ADMINS ONLY */}
+            {['pilot', 'admin'].includes(props.userInfos.status) ?
+              <span><NavItem>
+                <Link to="/infos" onClick={toggleNavbar} style={{ color: colorLight }} >Informations pratiques</Link>
+              </NavItem>
+                <NavItem>
+                  <Link to="/chat" onClick={toggleNavbar} style={{ color: colorLight }} >Messagerie instantanée</Link>
+                </NavItem>
+                <NavItem>
+                  <Link to="/myaccount" onClick={toggleNavbar} style={{ color: colorLight }} >Mon compte</Link>
+                </NavItem></span>
+              : ''}
+
           </Nav>
         </Collapse>
       </Navbar>

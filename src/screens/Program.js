@@ -37,7 +37,6 @@ function Program(props) {
 
   return (
     <Container fluid style={{
-      backgroundColor: "#fd9644",
       margin: 0,
       paddingLeft: '10%',
       paddingRight: '10%',
