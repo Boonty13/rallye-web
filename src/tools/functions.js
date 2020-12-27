@@ -30,6 +30,19 @@ export function flagNationality(nationality) {
 }
 
 
+//// Formating a date wiith hour and minute for display ////
+export function schedule(dateString) {
+  let hours = new Date(dateString).getHours();
+  let minutes = new Date(dateString).getMinutes()
+  if (hours.toString().length === 1) {
+      hours = '0' + hours
+  }
+  if (minutes.toString().length === 1) {
+      minutes = '0' + minutes
+  }
+  return (hours + ':' + minutes)
+}
+
 
 //// Getting data in local storage if existing ////
 

@@ -1,5 +1,5 @@
-// export const serverUrl = 'http://192.168.1.86:3000'
-export const serverUrl = 'https://serene-coast-48705.herokuapp.com'
+export const serverUrl = 'http://192.168.1.86:3000'
+// export const serverUrl = 'https://serene-coast-48705.herokuapp.com'
 
 
 //// Url for flags picto ////
@@ -8,7 +8,8 @@ export const urlFlagCHE = 'https://res.cloudinary.com/dibl3ihpy/image/upload/v16
 export const urlFlagWorld = 'https://res.cloudinary.com/dibl3ihpy/image/upload/v1608020160/world_pxx0mb.png';
 
 /// Color theme ///
-export const redLight = '#F12711'
+export const red = '#F12711'
+export const redLight = '#F6BABA'
 export const redDark = '#C12615'
 export const greyLight = '#C9C5C4'
 export const greyDark = '#8C8B8B'

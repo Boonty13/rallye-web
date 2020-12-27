@@ -50,37 +50,37 @@ function Navigation(props) {
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
             <NavItem>
-              <Link to="/" onClick={toggleNavbar}>Accueil</Link>
+              <Link to="/" onClick={toggleNavbar} style={{color:colorLight}} >Accueil</Link>
             </NavItem>
             <NavItem>
-              <Link to="/news" onClick={toggleNavbar}>Actualités du rallye</Link>
+              <Link to="/news" onClick={toggleNavbar} style={{color:colorLight}} >Actualités du rallye</Link>
             </NavItem>
             <NavItem>
-              <Link to="/program" onClick={toggleNavbar}>Programme</Link>
+              <Link to="/program" onClick={toggleNavbar} style={{color:colorLight}} >Programme</Link>
             </NavItem>
             <NavItem>
-              <Link to="/teams" onClick={toggleNavbar}>Liste des équipes</Link>
+              <Link to="/teams" onClick={toggleNavbar} style={{color:colorLight}} >Liste des équipes</Link>
             </NavItem>
             <NavItem>
-              <Link to="/maplive" onClick={toggleNavbar}>Suivi en direct</Link>
+              <Link to="/maplive" onClick={toggleNavbar} style={{color:colorLight}} >Suivi en direct</Link>
             </NavItem>
             <NavItem>
-              <Link to="/ranking" onClick={toggleNavbar}>Classement et résultats</Link>
+              <Link to="/ranking" onClick={toggleNavbar} style={{color:colorLight}} >Classement et résultats</Link>
             </NavItem>
             <NavItem>
-              <Link to="/media" onClick={toggleNavbar}>Médias officiels</Link>
+              <Link to="/media" onClick={toggleNavbar} style={{color:colorLight}} >Médias officiels</Link>
             </NavItem>
             <NavItem>
-              <Link to="/infos" onClick={toggleNavbar}>Informations pratiques</Link>
+              <Link to="/infos" onClick={toggleNavbar} style={{color:colorLight}} >Informations pratiques</Link>
             </NavItem>
             <NavItem>
-              <Link to="/chat" onClick={toggleNavbar}>Messagerie instantanée</Link>
+              <Link to="/chat" onClick={toggleNavbar} style={{color:colorLight}} >Messagerie instantanée</Link>
             </NavItem>
             <NavItem>
-              <Link to="/myaccount" onClick={toggleNavbar}>Mon compte</Link>
+              <Link to="/myaccount" onClick={toggleNavbar} style={{color:colorLight}} >Mon compte</Link>
             </NavItem>
             <NavItem>
-              <Link to="/" onClick={toggleNavbar}>Se déconnecter</Link>
+              <Link to="/" onClick={toggleNavbar} style={{color:colorLight}} >Se déconnecter</Link>
             </NavItem>
           </Nav>
         </Collapse>
