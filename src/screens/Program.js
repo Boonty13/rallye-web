@@ -56,7 +56,6 @@ function Program(props) {
   );
 }
 
-
 function mapDispatchToProps(dispatch) {
   return {
     changeScreen: function (screen) {

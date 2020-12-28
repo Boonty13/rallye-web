@@ -5,14 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import DetailTeam from '../components/DetailTeam'
-import { colorDark, greyBlack, redLight, serverUrl } from '../tools/globalVariables'
+import { colorDark, greyBlack, redLight, serverUrl, red } from '../tools/globalVariables'
 import { connect } from 'react-redux'
 
 
 function CardTeam(props) {
 
   const styleFavHeart = {
-    color: redLight,
+    color: red,
     fontSize: 23
   }
 

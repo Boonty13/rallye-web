@@ -1,6 +1,7 @@
 export default function (userInfos = {}, action) {
 
   if (action.type === 'record') {
+    console.log(action.user)
       return {
           token: action.user.token,
           status: action.user.status,

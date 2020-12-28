@@ -1,25 +1,84 @@
-import React from 'react';
-import {connect} from 'react-redux'
+import React, {useState, useEffect} from 'react';
+import { connect } from 'react-redux'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import socketIOClient from "socket.io-client";
+import {serverUrl} from '../tools/globalVariables'
+
+const socket = socketIOClient(serverUrl);
 
 function MapLive(props) {
   props.changeScreen('Suivi en direct')
+
+  const [vehiculeToDisplay, setVehiculeToDisplay] = useState([]);
+  const [userFavorites, setUserFavorites] = useState([]);
+  const [visibleLogin, setVisibleLogin] = useState(false);
+  const [visibleFavorites, setVisibleFavorites] = useState(false);
+
+  useEffect(() => {
+    socket.on('sendPositionToAll', (msg) => {
+      setVehiculeToDisplay(msg.allPosition)
+    })
+
+    if (props.userInfos.token === undefined) {
+      setVisibleLogin(!visibleLogin);
+    } else if (props.userFavorites.length === 0) {
+      setVisibleFavorites(!visibleFavorites);
+    }
+  }, []);
+
+  ///// Update the marker list to display if favorites changes /////
+  useEffect(() => {
+    const favList = props.userFavorites.map(fav => fav.car_id);
+    setUserFavorites(favList);
+  }, [props.userFavorites]);
+
+  ///// Filter the teams to display with favorites of the user connected /////
+  const displayWithFavorite = vehiculeToDisplay.filter(car => userFavorites.includes(car.idVehicule));
+
+  ///// Build the array of marker /////
+  const markerVehicules = displayWithFavorite.map((car, i) => {
+    return <Marker position={[car.lat, car.long]}>
+    <Popup>
+    {car.idVehicule.toString()}
+</Popup>
+  </Marker>
+  })
+
   return (
-   <div style={{backgroundColor: "#fd9644", flex:1, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-       <h1>Map page</h1>
-   </div>
+    // <div style={{ height: 300, width: 300 }}>
+      <MapContainer style={{ height: '100vh'}} center={[48.847648, 2.274218]} zoom={13} scrollWheelZoom={false}>
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {/* <Marker position={[51.505, -0.09]}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+    </Popup>
+        </Marker> */}
+        {markerVehicules}
+      </MapContainer>
+    // </div>
   );
 }
 
 
 function mapDispatchToProps(dispatch) {
   return {
-    changeScreen: function(screen) { 
-      dispatch( {type: 'changeScreen', screen }) 
+    changeScreen: function (screen) {
+      dispatch({ type: 'changeScreen', screen })
     }
   }
 }
 
+function mapStateToProps(state){
+  return{
+    userFavorites: state.userFavorites,
+    userInfos: state.userInfos
+  }
+}
+
 export default connect(
-    null, 
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(MapLive);

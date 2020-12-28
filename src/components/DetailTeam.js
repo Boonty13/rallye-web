@@ -6,13 +6,13 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
 import { connect } from 'react-redux'
 import { namePilot, fullNamePilot, flagNationality } from '../tools/functions'
-import { colorDark, greyBlack, redLight, serverUrl, colorLight, redDark } from '../tools/globalVariables'
+import { colorDark, greyBlack, redLight, serverUrl, colorLight, redDark, red } from '../tools/globalVariables'
 
 
 function DetailTeam(props) {
 
   const styleFavHeart = {
-    color: redLight,
+    color: red,
     fontSize: 23
   }
 
