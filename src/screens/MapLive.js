@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import socketIOClient from "socket.io-client";
-import {serverUrl} from '../tools/globalVariables'
+import { serverUrl } from '../tools/globalVariables'
+import ModalMapLive from '../components/ModalMapLive'
 
 const socket = socketIOClient(serverUrl);
 
@@ -13,6 +14,8 @@ function MapLive(props) {
   const [userFavorites, setUserFavorites] = useState([]);
   const [visibleLogin, setVisibleLogin] = useState(false);
   const [visibleFavorites, setVisibleFavorites] = useState(false);
+  const [modalShow, setModalShow] = useState(true);
+
 
   useEffect(() => {
     socket.on('sendPositionToAll', (msg) => {
@@ -38,26 +41,28 @@ function MapLive(props) {
   ///// Build the array of marker /////
   const markerVehicules = displayWithFavorite.map((car, i) => {
     return <Marker position={[car.lat, car.long]}>
-    <Popup>
-    {car.idVehicule.toString()}
-</Popup>
-  </Marker>
+      <Popup>#{car.idVehicule.toString()}</Popup>
+    </Marker>
   })
 
   return (
     // <div style={{ height: 300, width: 300 }}>
-      <MapContainer style={{ height: '100vh'}} center={[48.847648, 2.274218]} zoom={13} scrollWheelZoom={false}>
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {/* <Marker position={[51.505, -0.09]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-    </Popup>
-        </Marker> */}
-        {markerVehicules}
-      </MapContainer>
+    <MapContainer style={{ height: '100vh' }} center={[48.847648, 2.274218]} zoom={13} scrollWheelZoom={false}>
+      <TileLayer
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+
+      {userFavorites.length === 0 ?
+        <ModalMapLive show={modalShow} onHide={() => setModalShow(false)} text='Ajouter des favoris pour les suivre en direct sur la carte' />
+        : ''}
+
+      {props.userInfos.email == null ?
+        <ModalMapLive show={modalShow} onHide={() => setModalShow(false)} text='Connectez vous pour accéder à cette fonctionnalité' />
+        : ''}
+
+      {markerVehicules}
+    </MapContainer>
     // </div>
   );
 }
@@ -71,8 +76,8 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function mapStateToProps(state){
-  return{
+function mapStateToProps(state) {
+  return {
     userFavorites: state.userFavorites,
     userInfos: state.userInfos
   }

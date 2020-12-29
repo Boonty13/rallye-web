@@ -84,10 +84,14 @@ function CardTeam(props) {
         <CardImg style={{ opacity: 0.5 }} src={team.car.image} alt="car picture" />
         <CardImgOverlay style={{ color: colorDark }}>
           <CardTitle tag="h2">#{team.car_id}</CardTitle>
-          <div style={{display:'flex', flexDirection:'column'}}>
-            <FontAwesomeIcon icon={faHeart} style={styleHeart} onClick={() => { handleFavorite(team._id, team.car_id) }} />
+
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {props.userInfos.token != null ?
+              <FontAwesomeIcon icon={faHeart} style={styleHeart} onClick={() => { handleFavorite(team._id, team.car_id) }} />
+              : ''}
             <FontAwesomeIcon icon={faSearch} style={styleZoom} onClick={() => setModalShow(true)} />
           </div>
+          
         </CardImgOverlay>
       </Card>
     </Col>

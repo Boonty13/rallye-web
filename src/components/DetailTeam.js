@@ -68,23 +68,25 @@ function DetailTeam(props) {
   return (
     <Modal show={props.show} onHide={props.onHide} size="lg" centered >
 
-      <Modal.Header style={{backgroundColor: redDark, color: colorLight}}>
+      <Modal.Header style={{ backgroundColor: redDark, color: colorLight }}>
         <h4><b>#{team.car_id}</b> - {namePilot(team.pilot_1.firstname, team.pilot_1.name)} / {namePilot(team.pilot_2.firstname, team.pilot_2.name)}</h4>
       </Modal.Header>
 
       <Modal.Body style={{ flexDirection: 'column' }}>
         <div>{team.car.brand} - {team.car.model}<i> - {team.car.year}</i></div>
-        <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', marginTop:15, marginBottom:25}}>
-          <Image src={team.car.image} width='90%'/>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 15, marginBottom: 25 }}>
+          <Image src={team.car.image} width='90%' />
         </div>
-        <div style={{marginBottom:15}}>{team.car.description}</div>
-    <div>Pilote 1: <Image src={flagNationality(team.pilot_1.nationality)} width='20px'/> {fullNamePilot(team.pilot_1.firstname, team.pilot_1.name)}</div>
-    <div>Pilote 2: <Image src={flagNationality(team.pilot_1.nationality)} width='20px'/> {fullNamePilot(team.pilot_2.firstname, team.pilot_2.name)}</div>
+        <div style={{ marginBottom: 15 }}>{team.car.description}</div>
+        <div>Pilote 1: <Image src={flagNationality(team.pilot_1.nationality)} width='20px' /> {fullNamePilot(team.pilot_1.firstname, team.pilot_1.name)}</div>
+        <div>Pilote 2: <Image src={flagNationality(team.pilot_1.nationality)} width='20px' /> {fullNamePilot(team.pilot_2.firstname, team.pilot_2.name)}</div>
       </Modal.Body>
 
       <Modal.Footer >
-        <FontAwesomeIcon icon={faHeart} style={styleHeart} onClick={()=>handleFavorite(team._id, team.car_id)} />
-        <Button style={{ margin: 10, backgroundColor: redDark, color: colorLight, borderColor:redDark}} onClick={() => { props.onHide() }} >Retour</Button>
+        {props.userInfos.token != null ?
+          <FontAwesomeIcon icon={faHeart} style={styleHeart} onClick={() => { handleFavorite(team._id, team.car_id) }} />
+          : ''}
+        <Button style={{ margin: 10, backgroundColor: redDark, color: colorLight, borderColor: redDark }} onClick={() => { props.onHide() }} >Retour</Button>
       </Modal.Footer>
 
     </Modal>
@@ -110,8 +112,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-function mapStateToProps(state){
-  return{
+function mapStateToProps(state) {
+  return {
     userFavorites: state.userFavorites,
     userInfos: state.userInfos
   }

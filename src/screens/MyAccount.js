@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { Container, Row, Button, Col, Card, CardText, CardBody, CardTitle } from 'reactstrap'
 import { serverUrl, genericAvatarUrl, redLight, redDark, colorLight } from '../tools/globalVariables'
+import { Redirect } from 'react-router-dom'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons'
+
 
 function MyAccount(props) {
   props.changeScreen('Mon compte')
@@ -12,6 +14,11 @@ function MyAccount(props) {
   let avatar = props.avatar
   if (avatar === '') {
     avatar = genericAvatarUrl
+  }
+
+  // Secure myAccount screen if user is not logged in
+  if (props.userInfos.email == null) {
+    return <Redirect to='/' />
   }
 
   return (

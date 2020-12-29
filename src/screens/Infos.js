@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import { Accordion, Card } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
 import { Container, Row, Button, Col, ListGroup, ListGroupItem, Badge, Collapse } from 'reactstrap'
 import { serverUrl, red, redLight, redDark, greyLight, greyDark, greyBlack, colorLight, colorDark } from '../tools/globalVariables'
 
@@ -20,52 +21,66 @@ function Infos(props) {
         method: 'GET'
       })
       const answer = await rawAnswer.json();
-
+      console.log(answer)
       //// Format all content field of accordion menu ////
-      setHotel(
-        <Card style={{ borderLeft: 'none', borderRight: 'none', borderTopColor: redLight }}>
-          <Accordion.Toggle as={Card.Header} eventKey='0' style={{ backgroundColor: redDark, color: colorLight }}>
-            Hôtel du soir
+      if (answer.accomodation.length > 0) {
+        setHotel(
+          <Card style={{ borderLeft: 'none', borderRight: 'none', borderTopColor: redLight }}>
+            <Accordion.Toggle as={Card.Header} eventKey='0' style={{ backgroundColor: redDark, color: colorLight }}>
+              Hôtel du soir
         </Accordion.Toggle>
-          <Accordion.Collapse eventKey='0'>
-            <Card.Body style={{backgroundColor:redLight}}>
-              <div>{answer.accomodation[0].name}</div>
-              <div>{answer.accomodation[0].adress}</div>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      )
+            <Accordion.Collapse eventKey='0'>
+              <Card.Body style={{ backgroundColor: redLight }}>
+                <div>{answer.accomodation[0].name}</div>
+                <div>{answer.accomodation[0].adress}</div>
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        )
 
-      setCatering(
-        <Card style={{ borderLeft: 'none', borderRight: 'none', borderTopColor: redLight }}>
-          <Accordion.Toggle as={Card.Header} eventKey='1' style={{ backgroundColor: redDark, color: colorLight }}>
-            Restauration
+        setCatering(
+          <Card style={{ borderLeft: 'none', borderRight: 'none', borderTopColor: redLight }}>
+            <Accordion.Toggle as={Card.Header} eventKey='1' style={{ backgroundColor: redDark, color: colorLight }}>
+              Restauration
         </Accordion.Toggle>
-          <Accordion.Collapse eventKey='1'>
-            <Card.Body style={{backgroundColor:redLight}}>
-              <div>{answer.catering[0].adress}</div>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      )
+            <Accordion.Collapse eventKey='1'>
+              <Card.Body style={{ backgroundColor: redLight }}>
+                <div>{answer.catering[0].adress}</div>
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        )
 
-      setShuttle(
-        <Card style={{ borderLeft: 'none', borderRight: 'none', borderTopColor: redLight }}>
-          <Accordion.Toggle as={Card.Header} eventKey='2' style={{ backgroundColor: redDark, color: colorLight }}>
-            Infos navettes
+        setShuttle(
+          <Card style={{ borderLeft: 'none', borderRight: 'none', borderTopColor: redLight }}>
+            <Accordion.Toggle as={Card.Header} eventKey='2' style={{ backgroundColor: redDark, color: colorLight }}>
+              Infos navettes
         </Accordion.Toggle>
-          <Accordion.Collapse eventKey='2'>
-            <Card.Body style={{backgroundColor:redLight}}>
-              <p>Les navettes que nous vous proposons vous déposent à vos hôtels et aux Parcs Fermés. Les horaires affichés sont à titre indicatif. Les rotations des navettes sont prévues toutes les 30 minutes jusqu'à 9h.</p>
-              <p>Point de RDV: {answer.accomodation[0].shuttle_point}</p>
-              <div>Horaires: {answer.accomodation[0].shuttle_hours.map(shuttle => { return <div key={shuttle}>{shuttle}</div> })}</div>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      )
+            <Accordion.Collapse eventKey='2'>
+              <Card.Body style={{ backgroundColor: redLight }}>
+                <p>Les navettes que nous vous proposons vous déposent à vos hôtels et aux Parcs Fermés. Les horaires affichés sont à titre indicatif. Les rotations des navettes sont prévues toutes les 30 minutes jusqu'à 9h.</p>
+                <p>Point de RDV: {answer.accomodation[0].shuttle_point}</p>
+                <div>Horaires: {answer.accomodation[0].shuttle_hours.map(shuttle => { return <div key={shuttle}>{shuttle}</div> })}</div>
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        )
+      } else {
+        setHotel(
+          <p>
+            <div style={{ fontWeight: 'bold', color: redDark }}>Attention : vous n'êtes pas enregistré dans un hôtel pour ce soir</div>
+            <div style={{ fontWeight: 'bold', color: redDark }}>Prevenez immédiatement l'organisation</div>
+          </p>
+        )
+      }
     }
     getData()
   }, [])
+
+  // Secure myAccount screen if user is not logged in
+  if (props.userInfos.email == null) {
+    return <Redirect to='/' />
+  }
 
   return (
     <Container fluid style={{

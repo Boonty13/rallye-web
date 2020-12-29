@@ -7,7 +7,7 @@ import { serverUrl, red, redDark, redLight, greyDark, greyLight } from '../tools
 
 function Teams(props) {
   props.changeScreen('Liste des équipes')
-
+  
   const styleActiveBtn = {
     width:120, 
     backgroundColor: red,

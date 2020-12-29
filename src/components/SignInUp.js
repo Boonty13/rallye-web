@@ -82,7 +82,7 @@ function SignInUp(props) {
         return returnOb;
       })
       props.retrieveFavoriteTeam(favorite);
-      // props.log()
+      props.log()
       // storeData(answer.data.token, answer.data.status);
 
     } else {

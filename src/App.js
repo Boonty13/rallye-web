@@ -59,13 +59,13 @@ function App() {
 
           <Navigation />
           <Switch>
-            <Route path="/" exact component={Welcome} />
+            <Route path="/" exact component={News} />
             <Route path="/chat" component={Chat} />
             <Route path="/infos" component={Infos} />
             <Route path="/maplive" component={MapLive} />
             <Route path="/media" component={Media} />
             <Route path="/myaccount" component={MyAccount} />
-            <Route path="/news" component={News} />
+            {/* <Route path="/news" component={News} /> */}
             <Route path="/program" component={Program} />
             <Route path="/ranking" component={Ranking} />
             <Route path="/teams" component={Teams} />

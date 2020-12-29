@@ -17,7 +17,6 @@ function Navigation(props) {
   const [logged, setLogged] = useState(false);
 
   useEffect(() => {
-    console.log('LOG : ', logged)
     if (props.userInfos.length > 0) {
       setLogged(true)
     }
@@ -27,7 +26,7 @@ function Navigation(props) {
 
   const toggleNavbar = () => setCollapsed(!collapsed)
 
-  console.log('USER CONNECTED : ', props.userInfos)
+  console.log('USER CONNECTED : ', logged, props.userInfos)
 
   return (
     <div >
@@ -40,7 +39,7 @@ function Navigation(props) {
         <NavbarToggler onClick={toggleNavbar} className="mr-3" />
         <NavbarBrand style={{ display: 'flex', width: '80%', justifyContent: 'space-between' }}>
           {props.screen}
-
+        <div style={{color: redLight}}>{logged? props.userInfos.firstName : ''}</div>
           {logged ?
             <Button style={{ backgroundColor: redLight, color: redDark, border: 'none' }} onClick={() => { props.reset(); setLogged(!logged) }}><FontAwesomeIcon icon={faUser} /> Se déconnecter</Button>
             : <Button style={{ backgroundColor: redLight, color: redDark, border: 'none' }} onClick={() => { setModalShow(true) }}><FontAwesomeIcon icon={faUser} /> Se connecter / S'inscrire</Button>
@@ -49,11 +48,11 @@ function Navigation(props) {
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
             <NavItem>
-              <Link to="/" onClick={toggleNavbar} style={{ color: colorLight }} >Accueil</Link>
+              <Link to="/" onClick={toggleNavbar} style={{ color: colorLight }} >Actualités du rallye</Link>
             </NavItem>
-            <NavItem>
+            {/* <NavItem>
               <Link to="/news" onClick={toggleNavbar} style={{ color: colorLight }} >Actualités du rallye</Link>
-            </NavItem>
+            </NavItem> */}
             <NavItem>
               <Link to="/program" onClick={toggleNavbar} style={{ color: colorLight }} >Programme</Link>
             </NavItem>

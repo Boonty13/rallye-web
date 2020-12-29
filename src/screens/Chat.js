@@ -4,7 +4,7 @@ import { serverUrl, redLight, red, redDark, greyBlack, greyDark, greyLight, colo
 import { Container, Row, Button, Col, ListGroup, ListGroupItem, Badge, Input } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
-
+import { Redirect } from 'react-router-dom'
 import socketIOClient from 'socket.io-client';
 
 var socket = socketIOClient(serverUrl)
@@ -53,6 +53,11 @@ function Chat(props) {
     getHistoryChat('Officiel')
     getHistoryChat('Public')
   }, [])
+
+  // Secure myAccount screen if user is not logged in
+  if (props.userInfos.email == null) {
+    return <Redirect to='/' />
+  }
 
   async function updateHistoryChat(roomName, msg) {
     await fetch(`${serverUrl}/chat/update-chat`, {
