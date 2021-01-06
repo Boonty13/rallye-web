@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { serverUrl } from '../tools/globalVariables'
+import { Container, Row } from 'reactstrap'
+
 import CardNews from '../components/CardNews'
-import { Container, Row, Button } from 'reactstrap';
+import { serverUrl } from '../tools/globalVariables'
 
 function News(props) {
+
   props.changeScreen('Actualités du rallye')
 
   const [newsList, setNewsList] = useState([])
 
   useEffect(() => {
 
+    // Retrieve news from DB
     async function getNews() {
       const rawAnswer = await fetch(`${serverUrl}/news/get-news`, {
         method: 'GET',
@@ -18,6 +21,7 @@ function News(props) {
       let allNews = await rawAnswer.json();
       setNewsList(allNews.news)
     }
+
     getNews()
   }, [])
 
@@ -44,7 +48,7 @@ function News(props) {
   );
 }
 
-
+// Redux functions
 function mapDispatchToProps(dispatch) {
   return {
     changeScreen: function (screen) {

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Container, Row, Button, Col, ListGroup, ListGroupItem, Badge, Collapse } from 'reactstrap'
+import { Container, Row, Col } from 'reactstrap'
 import { Accordion, Card } from 'react-bootstrap'
-import { colorLight, redDark, serverUrl, colorDark, redLight, red } from '../tools/globalVariables'
+
 import DetailProgram from '../components/DetailProgram'
+import { colorLight, redDark, serverUrl, redLight } from '../tools/globalVariables'
 
 function Program(props) {
+
   props.changeScreen('Programme')
 
   const [program, setProgram] = useState([])
-  const dates = ['14/12/2020', '15/12/2020', '16/12/2020', '17/12/2020', '18/12/2020']
+  const dates = ['14/12/2020', '15/12/2020', '16/12/2020', '17/12/2020', '18/12/2020']  // Forced dates for our MVP. To change if the development continues.
 
   useEffect(() => {
     async function getProgram() {
@@ -24,13 +26,16 @@ function Program(props) {
 
   let fullProgram = dates.map((day, i) => {
     return (
-      <Card style={{borderLeft:'none', borderRight: 'none', borderTopColor: redLight}}>
-        <Accordion.Toggle as={Card.Header} eventKey={i+1} style={{backgroundColor:redDark, color:colorLight}}>
+      <Card style={{ borderLeft: 'none', borderRight: 'none', borderTopColor: redLight }}>
+
+        <Accordion.Toggle as={Card.Header} eventKey={i + 1} style={{ backgroundColor: redDark, color: colorLight }}>
           {day}
         </Accordion.Toggle>
-        <Accordion.Collapse eventKey={i+1}>
+
+        <Accordion.Collapse eventKey={i + 1}>
           <DetailProgram day={day} program={program} />
         </Accordion.Collapse>
+
       </Card>
     )
   })
@@ -56,6 +61,7 @@ function Program(props) {
   );
 }
 
+// Redux functions
 function mapDispatchToProps(dispatch) {
   return {
     changeScreen: function (screen) {

@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react'
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-
+import React from 'react'
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
 import screenName from './reducers/screenName.reducer'
 import userInfos from './reducers/userInfos.reducer'
@@ -19,37 +18,10 @@ import News from './screens/News'
 import Program from './screens/Program'
 import Ranking from './screens/Ranking'
 import Teams from './screens/Teams'
-import Welcome from './screens/Welcome'
-
-import {serverUrl} from './tools/globalVariables'
 
 const store = createStore(combineReducers({ screenName, userInfos, userFavorites, chatHistory }))
 
 function App() {
-  const [userStatus, setUserStatus] = useState('unknown')
-
-  useEffect(() => {
-    // AsyncStorage.clear()
-    const getData = async () => {
-
-      //// Getting data in local storage if existing ////
-      try {
-        const value = localStorage.getItem('token')
-        if (value !== null) {
-          const rawAnswer = await fetch(`${serverUrl}/user/get-user?token=${value}`, {
-            method: 'GET',
-          });
-          const answer = await rawAnswer.json();
-
-          setUserStatus(answer.user.status)
-        }
-
-      } catch (e) {
-        console.log('ERROR', e);
-      }
-    }
-    getData();
-  }, [userStatus])
 
   return (
 
@@ -65,7 +37,6 @@ function App() {
             <Route path="/maplive" component={MapLive} />
             <Route path="/media" component={Media} />
             <Route path="/myaccount" component={MyAccount} />
-            {/* <Route path="/news" component={News} /> */}
             <Route path="/program" component={Program} />
             <Route path="/ranking" component={Ranking} />
             <Route path="/teams" component={Teams} />

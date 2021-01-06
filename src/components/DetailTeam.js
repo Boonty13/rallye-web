@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { Modal, Button, Image } from 'react-bootstrap'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
-import { connect } from 'react-redux'
+import { greyBlack, serverUrl, colorLight, redDark, red } from '../tools/globalVariables'
 import { namePilot, fullNamePilot, flagNationality } from '../tools/functions'
-import { colorDark, greyBlack, redLight, serverUrl, colorLight, redDark, red } from '../tools/globalVariables'
 
 
 function DetailTeam(props) {
 
+  // Style for heart picto
   const styleFavHeart = {
     color: red,
     fontSize: 23
@@ -24,6 +25,8 @@ function DetailTeam(props) {
   const team = props.team
 
   useEffect(() => {
+
+    // Color in red the picto of favorite teams
     const inFavorites = props.userFavorites.filter(fav => fav._id === team._id);
     if (inFavorites.length > 0) {
       setStyleHeart(styleFavHeart)
@@ -32,8 +35,8 @@ function DetailTeam(props) {
     }
   }, [props.userFavorites])
 
-  const handleFavorite = async (numTeam, bib) => {
 
+  const handleFavorite = async (numTeam, bib) => {
     const filteredFav = props.userFavorites.filter(fav => fav._id === numTeam);
 
     // Add or Remove this team from my favorites
@@ -50,7 +53,6 @@ function DetailTeam(props) {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: `token=${props.userInfos.token}&newValue=${numTeam}`
       })
-
 
     } else {
       props.removeFavoriteTeam(numTeam)
@@ -93,7 +95,7 @@ function DetailTeam(props) {
   );
 }
 
-
+// Redux functions
 function mapDispatchToProps(dispatch) {
   return {
     record: function (user) {
@@ -110,7 +112,6 @@ function mapDispatchToProps(dispatch) {
     }
   }
 }
-
 
 function mapStateToProps(state) {
   return {

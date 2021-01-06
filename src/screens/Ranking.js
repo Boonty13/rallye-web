@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Container, Row, Button, Col, ListGroup, ListGroupItem, Badge } from 'reactstrap';
+import { Container, Row, Button, Col, ListGroup, ListGroupItem, Badge } from 'reactstrap'
 import { Image } from 'react-bootstrap'
 
-import { serverUrl,red,  redDark, redLight, greyBlack, greyDark, greyLight, colorLight, colorDark } from '../tools/globalVariables'
+import { serverUrl, red, redDark, redLight, greyDark, greyLight } from '../tools/globalVariables'
 import { fullNamePilot, namePilot, flagNationality } from '../tools/functions'
+
 function Ranking(props) {
+
   props.changeScreen('Classement et résultats')
 
+  // Styles for buttons
   const styleActiveBtn = {
     width: 120,
     backgroundColor: red,
@@ -64,8 +67,9 @@ function Ranking(props) {
   let teamRankingBig = teamToDisplay.map((team, i) => {
     return (
       <Col md='12' className="d-none d-md-block" >
-        <ListGroupItem style={{ display: 'flex', alignItems: 'center', backgroundColor:redLight }}>
+        <ListGroupItem style={{ display: 'flex', alignItems: 'center', backgroundColor: redLight }}>
 
+          {/* Style for badge depending on the position */}
           {team.position === 1 ?
             <Badge style={{ marginRight: '3%', width: '7%', backgroundColor: 'gold' }}>{team.position}</Badge>
             : team.position === 2 ?
@@ -86,6 +90,7 @@ function Ranking(props) {
             <div>{team.time}</div>
             {team.diff !== '' ? <div><small style={{ color: redDark }}>+{team.diff}</small></div> : <div></div>}
           </div>
+
         </ListGroupItem>
       </Col>
     )
@@ -96,7 +101,8 @@ function Ranking(props) {
       <Col xs='12' className="d-block d-md-none" >
         <ListGroupItem style={{ display: 'flex', alignItems: 'center', backgroundColor: redLight }}>
 
-        {team.position === 1 ?
+          {/* Style for badge depending on the position */}
+          {team.position === 1 ?
             <Badge style={{ marginRight: '3%', width: '7%', backgroundColor: 'gold' }}>{team.position}</Badge>
             : team.position === 2 ?
               <Badge style={{ marginRight: '3%', width: '7%', backgroundColor: 'silver' }}>{team.position}</Badge>
@@ -115,6 +121,7 @@ function Ranking(props) {
             <div>{team.time}</div>
             {team.diff !== '' ? <div><small style={{ color: redDark }}>+{team.diff}</small></div> : <div></div>}
           </div>
+
         </ListGroupItem>
       </Col>
     )
@@ -137,7 +144,6 @@ function Ranking(props) {
       </div>
       <Row>
         <Col>
-          {/* <DetailTeam team={team} show={modalShow} onHide={() => setModalShow(false)} /> */}
           <ListGroup>
             {teamRankingBig}
             {teamRankingSmall}
@@ -150,8 +156,7 @@ function Ranking(props) {
   );
 }
 
-
-
+// Redux functions
 function mapDispatchToProps(dispatch) {
   return {
     changeScreen: function (screen) {

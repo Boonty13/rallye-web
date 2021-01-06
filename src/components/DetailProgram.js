@@ -1,18 +1,19 @@
-import React from 'react';
-import { Container, Row, Button, Col, ListGroup, ListGroupItem, Badge, Collapse } from 'reactstrap'
+import React from 'react'
+import { ListGroup, ListGroupItem } from 'reactstrap'
 
+import { redLight } from '../tools/globalVariables'
 import { schedule } from '../tools/functions'
-import {redLight} from '../tools/globalVariables'
 
 function DetailProgram(props) {
 
+  // Keep events for the right day only
   let programOfDay = props.program.filter((plan) => (
     (new Date(plan.date).getDate() + '/' + (new Date(plan.date).getMonth() + 1) + '/' + new Date(plan.date).getFullYear()) === props.day)
   )
 
-  ///// Building event card /////
+  // Building event card 
   let programGrid = programOfDay.map((planning) => (
-    <ListGroupItem className="justify-content-between" style={{ display: 'flex', alignItems: 'center', backgroundColor:redLight}}>
+    <ListGroupItem className="justify-content-between" style={{ display: 'flex', alignItems: 'center', backgroundColor: redLight }}>
       <div >{schedule(planning.date)}</div>
 
       <div style={{ width: '75%' }}>
@@ -28,7 +29,7 @@ function DetailProgram(props) {
       {programGrid}
     </ListGroup>
 
-  );
+  )
 }
 
 export default DetailProgram;

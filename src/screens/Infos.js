@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Accordion, Card } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
-import { Container, Row, Button, Col, ListGroup, ListGroupItem, Badge, Collapse } from 'reactstrap'
-import { serverUrl, red, redLight, redDark, greyLight, greyDark, greyBlack, colorLight, colorDark } from '../tools/globalVariables'
+import { Accordion, Card } from 'react-bootstrap'
+import { Container, Row, Col } from 'reactstrap'
+
+import { serverUrl, redLight, redDark, colorLight } from '../tools/globalVariables'
 
 function Infos(props) {
   props.changeScreen('Informations pratiques')
@@ -21,7 +22,7 @@ function Infos(props) {
         method: 'GET'
       })
       const answer = await rawAnswer.json();
-      console.log(answer)
+
       //// Format all content field of accordion menu ////
       if (answer.accomodation.length > 0) {
         setHotel(
@@ -110,7 +111,7 @@ function Infos(props) {
   );
 }
 
-
+// Redux functions
 function mapDispatchToProps(dispatch) {
   return {
     changeScreen: function (screen) {

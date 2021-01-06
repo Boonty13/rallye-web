@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import socketIOClient from "socket.io-client";
-import { serverUrl } from '../tools/globalVariables'
+
 import ModalMapLive from '../components/ModalMapLive'
+import { serverUrl } from '../tools/globalVariables'
 
 const socket = socketIOClient(serverUrl);
 
 function MapLive(props) {
+
   props.changeScreen('Suivi en direct')
 
   const [vehiculeToDisplay, setVehiculeToDisplay] = useState([]);
@@ -15,7 +17,6 @@ function MapLive(props) {
   const [visibleLogin, setVisibleLogin] = useState(false);
   const [visibleFavorites, setVisibleFavorites] = useState(false);
   const [modalShow, setModalShow] = useState(true);
-
 
   useEffect(() => {
     socket.on('sendPositionToAll', (msg) => {
@@ -46,7 +47,6 @@ function MapLive(props) {
   })
 
   return (
-    // <div style={{ height: 300, width: 300 }}>
     <MapContainer style={{ height: '100vh' }} center={[48.847648, 2.274218]} zoom={13} scrollWheelZoom={false}>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -63,11 +63,10 @@ function MapLive(props) {
 
       {markerVehicules}
     </MapContainer>
-    // </div>
   );
 }
 
-
+// Redux functions
 function mapDispatchToProps(dispatch) {
   return {
     changeScreen: function (screen) {

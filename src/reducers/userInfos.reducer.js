@@ -1,7 +1,6 @@
 export default function (userInfos = {}, action) {
 
   if (action.type === 'record') {
-    console.log(action.user)
       return {
           token: action.user.token,
           status: action.user.status,
@@ -10,7 +9,7 @@ export default function (userInfos = {}, action) {
           email: action.user.email,
           avatar: action.user.avatar,
           nationality: action.user.nationality
-      };
+      }
 
   } else if (action.type === 'reset') {
       return {}

@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { Input, Button } from 'reactstrap'
 import { Modal } from 'react-bootstrap'
 
-import { Input, Button } from 'reactstrap';
-
-import { connect } from 'react-redux'
 import { colorLight, serverUrl, redDark } from '../tools/globalVariables'
-import { storeData } from '../tools/functions'
 
 function SignInUp(props) {
-
 
   const [emailSignIn, setEmailSignIn] = useState(null);
   const [passwordSignIn, setPasswordSignIn] = useState(null);
@@ -19,7 +16,6 @@ function SignInUp(props) {
   const [password, setPassword] = useState(null);
 
   const [errors, setErrors] = useState([]);
-
 
   /////////////// SIGN UP //////////////////////
   async function processSignUp() {
@@ -45,7 +41,8 @@ function SignInUp(props) {
     ///// Recording in reduce store and local if answer is ok //////
     if (answer.recorded === true) {
       props.record(answer.data);
-      // storeData(answer.data.token, answer.data.status);
+      props.log()
+
     } else {
       setErrors(answer.error);
     }
@@ -83,7 +80,6 @@ function SignInUp(props) {
       })
       props.retrieveFavoriteTeam(favorite);
       props.log()
-      // storeData(answer.data.token, answer.data.status);
 
     } else {
       setErrors(answer.error);
@@ -122,7 +118,7 @@ function SignInUp(props) {
   );
 }
 
-
+// Redux functions
 function mapDispatchToProps(dispatch) {
   return {
     record: function (user) {

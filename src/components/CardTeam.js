@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { Card, CardTitle, CardImg, CardImgOverlay, Col } from 'reactstrap'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import DetailTeam from '../components/DetailTeam'
-import { colorDark, greyBlack, redLight, serverUrl, red } from '../tools/globalVariables'
-import { connect } from 'react-redux'
+import { colorDark, greyBlack, serverUrl, red } from '../tools/globalVariables'
 
 
 function CardTeam(props) {
 
+  // Style for buttons
   const styleFavHeart = {
     color: red,
     fontSize: 23
@@ -33,18 +34,17 @@ function CardTeam(props) {
 
 
   useEffect(() => {
+
+    // Add red heart on teams that are recorded as favorites
     const inFavorites = props.userFavorites.filter(fav => fav._id === team._id);
     if (inFavorites.length > 0) {
       setStyleHeart(styleFavHeart)
-      // setInFav(true)
     } else {
       setStyleHeart(styleDefHeart)
-      // setInFav(false)
     }
   }, [props.userFavorites])
 
   const handleFavorite = async (numTeam, bib) => {
-
     const filteredFav = props.userFavorites.filter(fav => fav._id === numTeam);
 
     // Add or Remove this team from my favorites
@@ -62,7 +62,6 @@ function CardTeam(props) {
         body: `token=${props.userInfos.token}&newValue=${numTeam}`
       })
 
-
     } else {
       props.removeFavoriteTeam(numTeam)
       setStyleHeart(styleDefHeart)
@@ -76,10 +75,12 @@ function CardTeam(props) {
     }
   }
 
+  // Return responsive cards
   return (
-
     <Col xs="12" sm="6" md='4' lg='3' >
+
       <DetailTeam team={team} show={modalShow} onHide={() => setModalShow(false)} />
+
       <Card style={{ marginBottom: 30 }}>
         <CardImg style={{ opacity: 0.5 }} src={team.car.image} alt="car picture" />
         <CardImgOverlay style={{ color: colorDark }}>
@@ -91,13 +92,15 @@ function CardTeam(props) {
               : ''}
             <FontAwesomeIcon icon={faSearch} style={styleZoom} onClick={() => setModalShow(true)} />
           </div>
-          
+
         </CardImgOverlay>
       </Card>
-    </Col>
-  );
-};
 
+    </Col>
+  )
+}
+
+// Redux functions
 function mapDispatchToProps(dispatch) {
   return {
     addFavoriteTeam: function (numTeam) {

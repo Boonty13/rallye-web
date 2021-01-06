@@ -1,17 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Button } from 'reactstrap'
 import { Modal } from 'react-bootstrap'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
+import { colorLight, redDark } from '../tools/globalVariables'
 
-import { redDark } from '../tools/globalVariables'
-
-function ModalMapLive(props) {
+function ModalModifyAccount(props) {
 
   return (
     <Modal show={props.show} onHide={props.onHide} size="lg" centered >
-      <p style={{ padding: 30 }}><FontAwesomeIcon icon={faExclamationTriangle} color={redDark} /> {props.text}</p>
+      <p style={{ padding: 30 }}>{props.content}</p>
+      <Button onClick={()=>{props.click() ; props.onHide()}} style={{backgroundColor:redDark, color:colorLight}}>Valider la modification</Button>
     </Modal>
   )
 }
@@ -27,4 +26,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   null
-)(ModalMapLive);
+)(ModalModifyAccount);

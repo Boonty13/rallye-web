@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import CardTeam from '../components/CardTeam'
-import { Container, Row, Button } from 'reactstrap';
+import { Container, Row, Button } from 'reactstrap'
 
-import { serverUrl, red, redDark, redLight, greyDark, greyLight } from '../tools/globalVariables'
+import CardTeam from '../components/CardTeam'
+import { serverUrl, red, redDark, greyDark, greyLight } from '../tools/globalVariables'
 
 function Teams(props) {
+
   props.changeScreen('Liste des équipes')
-  
+
+  // Style for buttons
   const styleActiveBtn = {
-    width:120, 
+    width: 120,
     backgroundColor: red,
     borderColor: redDark
   }
 
   const styleInactiveBtn = {
-    width:120, 
+    width: 120,
     backgroundColor: greyLight,
     borderColor: greyDark
   }
@@ -83,6 +85,7 @@ function Teams(props) {
       paddingTop: '3%',
       height: '100vh'
     }}>
+
       <div style={{ marginBottom: '3%', display: 'flex', justifyContent: 'center' }}>
 
         <Button onClick={() => noFilter()} style={styleBtnAll}>Tous</Button>
@@ -90,14 +93,16 @@ function Teams(props) {
         <Button onClick={() => filterCompetition()} style={styleBtnComp}>Compétition</Button>
 
       </div>
+
       <Row>
         {teams}
       </Row>
+
     </Container>
   );
 }
 
-
+// Redux functions
 function mapDispatchToProps(dispatch) {
   return {
     changeScreen: function (screen) {

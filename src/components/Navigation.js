@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } from 'reactstrap';
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } from 'reactstrap'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 import SignInUp from '../components/SignInUp'
-import { redDark, redLight, colorDark, colorLight, greyBlack, greyDark, greyLight } from '../tools/globalVariables'
+import { redDark, redLight, colorLight } from '../tools/globalVariables'
 
 
 function Navigation(props) {
@@ -22,11 +22,11 @@ function Navigation(props) {
     }
   }, [logged])
 
+  // Show first name if user connected
   const toggleLogged = () => setLogged(!logged)
 
+  // Show all menu if not collapsed
   const toggleNavbar = () => setCollapsed(!collapsed)
-
-  console.log('USER CONNECTED : ', logged, props.userInfos)
 
   return (
     <div >
@@ -37,22 +37,21 @@ function Navigation(props) {
       {/* NAVIGATION */}
       <Navbar style={{ backgroundColor: redDark, justifyContent: 'left' }} dark>
         <NavbarToggler onClick={toggleNavbar} className="mr-3" />
+
         <NavbarBrand style={{ display: 'flex', width: '80%', justifyContent: 'space-between' }}>
           {props.screen}
-        <div style={{color: redLight}}>{logged? props.userInfos.firstName : ''}</div>
+          <div style={{ color: redLight }}>{logged ? props.userInfos.firstName : ''}</div>
           {logged ?
             <Button style={{ backgroundColor: redLight, color: redDark, border: 'none' }} onClick={() => { props.reset(); setLogged(!logged) }}><FontAwesomeIcon icon={faUser} /> Se déconnecter</Button>
             : <Button style={{ backgroundColor: redLight, color: redDark, border: 'none' }} onClick={() => { setModalShow(true) }}><FontAwesomeIcon icon={faUser} /> Se connecter / S'inscrire</Button>
           }
         </NavbarBrand>
+
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
             <NavItem>
               <Link to="/" onClick={toggleNavbar} style={{ color: colorLight }} >Actualités du rallye</Link>
             </NavItem>
-            {/* <NavItem>
-              <Link to="/news" onClick={toggleNavbar} style={{ color: colorLight }} >Actualités du rallye</Link>
-            </NavItem> */}
             <NavItem>
               <Link to="/program" onClick={toggleNavbar} style={{ color: colorLight }} >Programme</Link>
             </NavItem>
@@ -84,11 +83,14 @@ function Navigation(props) {
 
           </Nav>
         </Collapse>
+
       </Navbar>
+
     </div>
   );
 }
 
+// Redux functions
 function mapDispatchToProps(dispatch) {
   return {
     reset: function () {
