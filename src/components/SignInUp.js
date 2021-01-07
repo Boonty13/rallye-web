@@ -7,15 +7,17 @@ import { colorLight, serverUrl, redDark } from '../tools/globalVariables'
 
 function SignInUp(props) {
 
-  const [emailSignIn, setEmailSignIn] = useState(null);
-  const [passwordSignIn, setPasswordSignIn] = useState(null);
+  const [emailSignIn, setEmailSignIn] = useState('');
+  const [passwordSignIn, setPasswordSignIn] = useState('');
 
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const [errors, setErrors] = useState([]);
+  const [errorsSignIn, setErrorsSignIn] = useState([]);
+  const [errorsSignUp, setErrorsSignUp] = useState([]);
+
 
   /////////////// SIGN UP //////////////////////
   async function processSignUp() {
@@ -42,9 +44,19 @@ function SignInUp(props) {
     if (answer.recorded === true) {
       props.record(answer.data);
       props.log()
+      props.onHide()
+
+      // reset states
+      setErrorsSignUp([])
+      setEmail('')
+      setPassword('')
+      setFirstName('')
+      setLastName('')
 
     } else {
-      setErrors(answer.error);
+      setErrorsSignUp(answer.error.map((err) => (
+        <p>{err}</p>
+      )))
     }
   }
 
@@ -80,21 +92,30 @@ function SignInUp(props) {
       })
       props.retrieveFavoriteTeam(favorite);
       props.log()
+      props.onHide()
+
+      // reset states
+      setErrorsSignIn([])
+      setEmailSignIn('')
+      setPasswordSignIn('')
 
     } else {
-      setErrors(answer.error);
+      setErrorsSignIn(answer.error.map((err) => (
+        <p>{err}</p>
+      )))
     }
   }
 
   return (
-    <Modal show={props.show} onHide={props.onHide} size="lg" centered >
+    <Modal show={props.show} onHide={() => { props.onHide(); setErrorsSignIn([]) ; setErrorsSignUp([]) }} size="lg" centered >
 
       <Modal.Footer style={{ flexDirection: 'column', textAlign: 'center' }}>
         <h4>Se connecter</h4>
 
         <Input id='email' placeholder='Email' type='text' onChange={(e) => { setEmailSignIn(e.target.value) }} />
         <Input id='password' placeholder='Mot de passe' type='password' onChange={(e) => { setPasswordSignIn(e.target.value) }} />
-        <Button style={{ margin: 10, backgroundColor: redDark, color: colorLight, border: 'none' }} onClick={() => { processSignIn(); props.onHide() }} type="submit" >Valider</Button>
+        <Button style={{ margin: 10, backgroundColor: redDark, color: colorLight, border: 'none' }} onClick={() => { processSignIn() }} type="submit" >Valider</Button>
+        {errorsSignIn}
       </Modal.Footer>
 
       <Modal.Footer style={{ flexDirection: 'column' }}>
@@ -111,7 +132,8 @@ function SignInUp(props) {
         <Input id='lastName' placeholder='Nom' type='text' onChange={(e) => { setLastName(e.target.value) }} />
         <Input id='email' placeholder='Email' type='text' onChange={(e) => { setEmail(e.target.value) }} />
         <Input id='password' placeholder='Mot de passe' type='password' onChange={(e) => { setPassword(e.target.value) }} />
-        <Button style={{ margin: 10, backgroundColor: redDark, color: colorLight, border: 'none' }} onClick={() => { processSignUp(); props.onHide() }} type='submit'>Valider</Button>
+        <Button style={{ margin: 10, backgroundColor: redDark, color: colorLight, border: 'none' }} onClick={() => { processSignUp() }} type='submit'>Valider</Button>
+        {errorsSignUp}
       </Modal.Footer>
 
     </Modal>
