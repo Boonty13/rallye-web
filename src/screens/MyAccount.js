@@ -14,7 +14,7 @@ function MyAccount(props) {
 
   props.changeScreen('Mon compte')
 
-  const [avatar, setAvatar] = useState(props.userInfos.avatar == null ? genericAvatarUrl : props.userInfos.avatar)
+  const [avatar, setAvatar] = useState(props.userInfos.avatar === null || props.userInfos.avatar === '' || props.userInfos.avatar === undefined ? genericAvatarUrl : props.userInfos.avatar)
   const [firstName, setFirstName] = useState(props.userInfos.firstName)
   const [lastName, setLastName] = useState(props.userInfos.lastName)
   const [nationality, setNationality] = useState(props.userInfos.nationality)
@@ -28,9 +28,8 @@ function MyAccount(props) {
   }
 
   const handleChangePassword = async () => {
-
     // Modify password in BDD
-    const rawAnswer = await fetch(`${serverUrl}/user/update-password`, {
+    await fetch(`${serverUrl}/user/update-password`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `token=${props.userInfos.token}&newValue=${password}`
@@ -39,9 +38,7 @@ function MyAccount(props) {
     setPassword('')
   }
 
-
   const handleSaveNewProfile = async () => {
-
     // Create object for updating BDD
     const updateFields = {
       userFirstName: firstName,
@@ -67,7 +64,7 @@ function MyAccount(props) {
     const strUpdateFields = JSON.stringify(updateFields)
 
     // Modify user in BDD
-    const rawAnswer = await fetch(`${serverUrl}/user/update-user`, {
+    await fetch(`${serverUrl}/user/update-user`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `token=${props.userInfos.token}&newValue=${strUpdateFields}`
@@ -81,9 +78,9 @@ function MyAccount(props) {
 
   const modalInfosContent = (
     <div>
-      <Input id='firstName' value={firstName} placeholder='Prénom' type='text' onChange={(e) => { setFirstName(e.target.value) }} />
-      <Input id='lastName' value={lastName} placeholder='Nom' type='text' onChange={(e) => { setLastName(e.target.value) }} />
-      <Input id='nationality' value={nationality} placeholder='Code nationalité' type='text' onChange={(e) => { setNationality(e.target.value) }} />
+      <p>Prénom : <Input id='firstName' value={firstName} placeholder='Prénom' type='text' onChange={(e) => { setFirstName(e.target.value) }} /></p>
+      <p>Nom : <Input id='lastName' value={lastName} placeholder='Nom' type='text' onChange={(e) => { setLastName(e.target.value) }} /></p>
+      <p>Code nationalité : <Input id='nationality' value={nationality} placeholder='Code nationalité' type='text' onChange={(e) => { setNationality(e.target.value) }} /></p>
     </div>
   )
 
@@ -101,7 +98,6 @@ function MyAccount(props) {
 
           <ModalModifyAccount show={modalPassShow} onHide={() => setModalPassShow(false)} content={modalPassContent} click={() => handleChangePassword()} />
           <ModalModifyAccount show={modalInfosShow} onHide={() => setModalInfosShow(false)} content={modalInfosContent} click={() => handleSaveNewProfile()} />
-
 
           <Card style={{ borderColor: redLight }}>
             <CardBody>
